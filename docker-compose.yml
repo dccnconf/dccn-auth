@@ -4,22 +4,18 @@ services:
   db:
     image: postgres:latest
     environment:
-      - POSTGRES_PASSWORD=qwerty
+      - POSTGRES_PASSWORD=qwerty  # we define password here to simplify dev only
     ports:
       - "5430:5432"
     volumes:
       - "dbdata:/var/lib/postgresql"
       - "./scripts/initdb/:/docker-entrypoint-initdb.d"
-#  api:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    volumes:
-#      - .:/app
-#    ports:
-#      - 3000:3000
-#    depends_on:
-#      - db
+  redis:
+    # Set some dummy password, so just to make sure Flask use it
+    image: redis:latest
+    command: redis-server --requirepass qwerty
+    ports:
+      - 6370:6379
 
 volumes:
   dbdata:
