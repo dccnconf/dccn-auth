@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+echo "Executing PSQL script..."
+
+psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" <<-EOSQL
+  CREATE USER dccn_auth_admin WITH PASSWORD 'qwerty';
+  ALTER ROLE dccn_auth_admin SET client_encoding TO 'utf8';
+  ALTER ROLE dccn_auth_admin SET default_transaction_isolation TO 'read committed';
+  ALTER ROLE dccn_auth_admin SET timezone TO 'Europe/Moscow';
+  CREATE DATABASE dccn_auth;
+  GRANT ALL PRIVILEGES ON DATABASE dccn_auth TO dccn_auth_admin;
+EOSQL
