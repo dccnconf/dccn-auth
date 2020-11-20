@@ -3,7 +3,7 @@ set -e
 
 echo "Executing PSQL script..."
 
-psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" <<-EOSQL
+psql -v ON_ERROR_STOP=1 -U postgres <<-EOSQL
   CREATE USER dccn_auth_test_admin WITH PASSWORD '123456';
   ALTER ROLE dccn_auth_test_admin SET client_encoding TO 'utf8';
   ALTER ROLE dccn_auth_test_admin SET default_transaction_isolation TO 'read committed';

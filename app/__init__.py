@@ -1,12 +1,24 @@
+import os
+
 from flask import Flask
 from flask_migrate import Migrate
 
 migrate = Migrate()
 
 
-def create_app(config_name=None):
+def create_app(config_name='prod'):
+    """
+    Create Flask application.
+
+    Args:
+        config_name:  'prod' (default), 'dev', 'test'
+
+    Returns:
+        Flask application
+    """
     app = Flask(__name__)
 
+    # config_name = os.environ.get('APP_MODE', 'production')
     settings = 'app.config.Config'
     app.config.from_object(settings)
 
