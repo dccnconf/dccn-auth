@@ -17,12 +17,12 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Copy and install requirements
-COPY requirements.txt .
+COPY ../requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project files and entrypoint script:
-COPY ./app /app/app
-COPY ./scripts/entrypoint.web.sh /app
+COPY ../app /app/app
+COPY ../scripts/entrypoint.web.sh /app
 
 # Change owner to avoid running code as root:
 RUN chown -R app:app /app

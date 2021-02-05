@@ -12,9 +12,9 @@ services:
       - "${DB_PORT}:5432"
     volumes:
       - "dbdata:/var/lib/postgresql"
-      - "./scripts/initdb/:/docker-entrypoint-initdb.d"
+      - "../scripts/initdb/:/docker-entrypoint-initdb.d"
     env_file:
-      - ./dev.env
+      - ../dev.env
 
   redis:
     image: redis:latest
@@ -22,7 +22,22 @@ services:
     ports:
       - ${REDIS_PORT}:6379
     env_file:
-      - ./dev.env
+      - ../dev.env
+
+  api:
+#    depends_on:
+#      - db
+#      - redis
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile-dev
+    volumes:
+      - ..:/app
+    ports:
+    - ${API_PORT}:3000
+    env_file:
+      - ../dev.env
+    command: flask run --host 0.0.0.0 --port 3000
 
 volumes:
   dbdata:
